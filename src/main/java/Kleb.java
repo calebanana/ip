@@ -43,7 +43,7 @@ public class Kleb {
     }
 
     public static void markTask(String input) {
-        String taskNo = input.substring(5).trim();
+        String taskNo = input.substring(4).trim();
 
         try {
             int taskIdx = Integer.parseInt(taskNo);
@@ -53,11 +53,13 @@ public class Kleb {
 
         } catch (NumberFormatException e) {
             System.out.println("Uh-oh! Input is invalid!");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Uh-oh! Enter a number within the list.");
         }
     }
 
     public static void unmarkTask(String input) {
-        String taskNo = input.substring(7).trim();
+        String taskNo = input.substring(6).trim();
 
         try {
             int taskIdx = Integer.parseInt(taskNo);
@@ -67,33 +69,61 @@ public class Kleb {
 
         } catch (NumberFormatException e) {
             System.out.println("Uh-oh! Input is invalid!");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Uh-oh! Enter a number within the list.");
         }
     }
 
-    public static void addTodo(String input) {
-        String description = input.substring(5).trim();
+    public static void addTodo(String input) throws InvalidToDoException {
+        String description = input.substring(4).trim();
 
-        addTask(new ToDo(description));
+        if (description.equals("")) {
+            throw new InvalidToDoException();
+        } else {
+            addTask(new ToDo(description));
+        }
     }
 
-    public static void addDeadline(String input) {
-        String content = input.substring(9).trim();
-        String[] parts = content.split("/by");
-        String description = parts[0].trim();
-        String by = parts[1].trim();
+    public static void addDeadline(String input) throws InvalidDeadlineException {
+        String content = input.substring(8).trim();
+        String[] parts = content.split("/by", 2);
 
-        addTask(new Deadline(description, by));
+        if (parts.length != 2) {
+            throw new InvalidDeadlineException();
+        } else {
+            String description = parts[0].trim();
+            String by = parts[1].trim();
+
+            if (description.equals("") || by.equals("")) {
+                throw new InvalidDeadlineException();
+            } else {
+                addTask(new Deadline(description, by));
+            }
+        }
     }
 
-    public static void addEvent(String input) {
-        String content = input.substring(6).trim();
-        String[] front = content.split("/from");
-        String[] back = front[1].split("/to");
-        String description = front[0].trim();
-        String from = back[0].trim();
-        String to = back[1].trim();
+    public static void addEvent(String input) throws InvalidEventException {
+        String content = input.substring(5).trim();
+        String[] front = content.split("/from", 2);
 
-        addTask(new Event(description, from, to));
+        if (front.length == 2) {
+            String[] back = front[1].split("/to", 2);
+            if (back.length == 2) {
+                String description = front[0].trim();
+                String from = back[0].trim();
+                String to = back[1].trim();
+
+                if (description.equals("") || from.equals("") || to.equals("")) {
+                    throw new InvalidEventException();
+                } else {
+                    addTask(new Event(description, from, to));
+                }
+            } else {
+                throw new InvalidEventException();
+            }
+        } else {
+            throw new InvalidEventException();
+        }
     }
 
     public static void echo() {
@@ -108,20 +138,28 @@ public class Kleb {
                 case "bye" -> goodbye();
                 case "list" -> listTasks();
                 default -> {
-                    if (input.startsWith("mark ")) {
-                        markTask(input);
-                    } else if (input.startsWith("unmark ")) {
-                        unmarkTask(input);
-                    } else if (input.startsWith("todo ")) {
-                        addTodo(input);
-                    } else if (input.startsWith("deadline ")) {
-                        addDeadline(input);
-                    } else if (input.startsWith("event ")) {
-                        addEvent(input);
+                    try {
+                        if (input.startsWith("mark")) {
+                            markTask(input);
+                        } else if (input.startsWith("unmark")) {
+                            unmarkTask(input);
+                        } else if (input.startsWith("todo")) {
+                            addTodo(input);
+                        } else if (input.startsWith("deadline")) {
+                            addDeadline(input);
+                        } else if (input.startsWith("event")) {
+                            addEvent(input);
+                        } else {
+                            System.out.println("""
+                                    Hmm, I don't quite understand your input.
+                                    Available commands:
+                                    mark, unmark, todo, deadline, event, list, bye""");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
                     }
                 }
             }
-
             line();
         } while (!(input.equals("bye")));
     }
