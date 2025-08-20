@@ -1,0 +1,9 @@
+todo buy groceries
+deadline finish report /by 10pm
+event lecture /from 2pm /to 4pm
+mark 2
+mark 3
+list
+unmark 2
+list
+bye
