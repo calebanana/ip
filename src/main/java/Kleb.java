@@ -31,9 +31,10 @@ public class Kleb {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void addTask(String input) {
-        tasks.add(new Task(input));
-        System.out.println("added: " + input);
+    public static void addTask(Task task) {
+        tasks.add(task);
+        System.out.println("Added a task to your list:\n\t" + task);
+        System.out.println(String.format("Now you have %d task(s) in the list.", tasks.size()));
     }
 
     public static void listTasks() {
@@ -50,10 +51,10 @@ public class Kleb {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             task.mark();
-            System.out.println("Good job! This task has been marked as done:\n" + task);
+            System.out.println("Good job! This task has been marked as done:\n\t" + task);
 
         } catch (NumberFormatException e) {
-            addTask(input);
+            System.out.println("Uh-oh! Input is invalid!");
         }
     }
 
@@ -64,11 +65,37 @@ public class Kleb {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             task.unmark();
-            System.out.println("Okay! This task has been marked as undone:\n" + task);
+            System.out.println("Okay! This task has been marked as undone:\n\t" + task);
 
         } catch (NumberFormatException e) {
-            addTask(input);
+            System.out.println("Uh-oh! Input is invalid!");
         }
+    }
+
+    public static void addTodo(String input) {
+        String description = input.substring(5).trim();
+
+        addTask(new ToDo(description));
+    }
+
+    public static void addDeadline(String input) {
+        String content = input.substring(9).trim();
+        String[] parts = content.split("/by");
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+
+        addTask(new Deadline(description, by));
+    }
+
+    public static void addEvent(String input) {
+        String content = input.substring(6).trim();
+        String[] front = content.split("/from");
+        String[] back = front[1].split("/to");
+        String description = front[0].trim();
+        String from = back[0].trim();
+        String to = back[1].trim();
+
+        addTask(new Event(description, from, to));
     }
 
     public static void echo() {
@@ -87,8 +114,12 @@ public class Kleb {
                         markTask(input);
                     } else if (input.startsWith("unmark ")) {
                         unmarkTask(input);
-                    } else {
-                        addTask(input);
+                    } else if (input.startsWith("todo ")) {
+                        addTodo(input);
+                    } else if (input.startsWith("deadline ")) {
+                        addDeadline(input);
+                    } else if (input.startsWith("event ")) {
+                        addEvent(input);
                     }
                 }
             }
