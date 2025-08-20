@@ -29,7 +29,6 @@ public class Kleb {
 
     public static void goodbye() {
         System.out.println("Bye. Hope to see you again soon!");
-        line();
     }
 
     public static void addTask(String task) {
@@ -37,19 +36,28 @@ public class Kleb {
         System.out.println("added: " + task);
     }
 
+    public static void listTasks() {
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(String.format("%d. %s", i + 1, tasks.get(i)));
+        }
+    }
+
     public static void echo() {
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        line();
+        String input;
 
-        while (!(input.toLowerCase().equals("bye"))) {
-            addTask(input);
+        do {
+            input = scanner.nextLine().toLowerCase();
             line();
-            input = scanner.nextLine();
-            line();
-        }
 
-        goodbye();
+            switch (input) {
+                case "bye" -> goodbye();
+                case "list" -> listTasks();
+                default -> addTask(input);
+            }
+
+            line();
+        } while (!(input.equals("bye")));
     }
 
     public static void main(String[] args) {
