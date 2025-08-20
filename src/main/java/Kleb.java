@@ -4,13 +4,11 @@ import java.util.Scanner;
 
 public class Kleb {
     private static final String LOGO = """
-            
-            ██╗  ██╗██╗     ███████╗██████╗\s
-            ██║ ██╔╝██║     ██╔════╝██╔══██╗
-            █████╔╝ ██║     █████╗  ██████╔╝
-            ██╔═██╗ ██║     ██╔══╝  ██╔══██╗
-            ██║  ██╗███████╗███████╗██████╔╝
-            ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝\s
+             _    _      _    \s
+            | | _| | ___| |__ \s
+            | |/ / |/ _ \\ '_ \\\s
+            |   <| |  __/ |_) |
+            |_|\\_\\_|\\___|_.__/\s
                                            \s""";
     private static final String BOT_NAME = "Kleb";
     private static final List<Task> tasks = new ArrayList<>();
