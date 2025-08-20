@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Kleb {
@@ -11,6 +13,7 @@ public class Kleb {
             ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝\s
                                            \s""";
     private static final String BOT_NAME = "Kleb";
+    private static List<String> tasks = new ArrayList<>();
 
     public static void line() {
         System.out.println("____________________________________________________________");
@@ -29,13 +32,18 @@ public class Kleb {
         line();
     }
 
+    public static void addTask(String task) {
+        tasks.add(task);
+        System.out.println("added: " + task);
+    }
+
     public static void echo() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         line();
 
         while (!(input.toLowerCase().equals("bye"))) {
-            System.out.println(input);
+            addTask(input);
             line();
             input = scanner.nextLine();
             line();
