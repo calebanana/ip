@@ -13,7 +13,7 @@ public class Kleb {
             ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝\s
                                            \s""";
     private static final String BOT_NAME = "Kleb";
-    private static List<String> tasks = new ArrayList<>();
+    private static final List<Task> tasks = new ArrayList<>();
 
     public static void line() {
         System.out.println("____________________________________________________________");
@@ -31,14 +31,43 @@ public class Kleb {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void addTask(String task) {
-        tasks.add(task);
-        System.out.println("added: " + task);
+    public static void addTask(String input) {
+        tasks.add(new Task(input));
+        System.out.println("added: " + input);
     }
 
     public static void listTasks() {
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(String.format("%d. %s", i + 1, tasks.get(i)));
+        }
+    }
+
+    public static void markTask(String input) {
+        String taskNo = input.substring(5).trim();
+
+        try {
+            int taskIdx = Integer.parseInt(taskNo);
+            Task task = tasks.get(taskIdx - 1);
+            task.mark();
+            System.out.println("Good job! This task has been marked as done:\n" + task);
+
+        } catch (NumberFormatException e) {
+            addTask(input);
+        }
+    }
+
+    public static void unmarkTask(String input) {
+        String taskNo = input.substring(7).trim();
+
+        try {
+            int taskIdx = Integer.parseInt(taskNo);
+            Task task = tasks.get(taskIdx - 1);
+            task.unmark();
+            System.out.println("Okay! This task has been marked as undone:\n" + task);
+
+        } catch (NumberFormatException e) {
+            addTask(input);
         }
     }
 
@@ -53,7 +82,15 @@ public class Kleb {
             switch (input) {
                 case "bye" -> goodbye();
                 case "list" -> listTasks();
-                default -> addTask(input);
+                default -> {
+                    if (input.startsWith("mark ")) {
+                        markTask(input);
+                    } else if (input.startsWith("unmark ")) {
+                        unmarkTask(input);
+                    } else {
+                        addTask(input);
+                    }
+                }
             }
 
             line();
