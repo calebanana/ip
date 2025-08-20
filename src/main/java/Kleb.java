@@ -126,6 +126,21 @@ public class Kleb {
         }
     }
 
+    public static void deleteTask(String input) {
+        String taskNo = input.substring(6).trim();
+
+        try {
+            int taskIdx = Integer.parseInt(taskNo);
+            Task task = tasks.get(taskIdx - 1);
+            tasks.remove(task);
+            System.out.println("Poof! This task has been deleted:\n\t" + task);
+        } catch (NumberFormatException e) {
+            System.out.println("Uh-oh! Input is invalid!");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Uh-oh! Enter a number within the list.");
+        }
+    }
+
     public static void echo() {
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -149,11 +164,13 @@ public class Kleb {
                             addDeadline(input);
                         } else if (input.startsWith("event")) {
                             addEvent(input);
+                        } else if (input.startsWith("delete")) {
+                            deleteTask(input);
                         } else {
                             System.out.println("""
                                     Hmm, I don't quite understand your input.
                                     Available commands:
-                                    mark, unmark, todo, deadline, event, list, bye""");
+                                    mark, unmark, todo, deadline, event, delete, list, bye""");
                         }
                     } catch (Exception e) {
                         System.out.println(e);
