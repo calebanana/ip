@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Kleb {
     private static final String LOGO = """
             
@@ -27,8 +29,23 @@ public class Kleb {
         line();
     }
 
+    public static void echo() {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        line();
+
+        while (!(input.toLowerCase().equals("bye"))) {
+            System.out.println(input);
+            line();
+            input = scanner.nextLine();
+            line();
+        }
+
+        goodbye();
+    }
+
     public static void main(String[] args) {
         hello();
-        goodbye();
+        echo();
     }
 }
