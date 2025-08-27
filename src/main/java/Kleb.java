@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -197,6 +198,18 @@ public class Kleb {
         }
     }
 
+    public static void saveTasks() {
+        try (FileWriter fileWriter = new FileWriter(SAVE_FILE_PATH)) {
+            for (Task task : tasks) {
+                fileWriter.write(task.toSaveString() + "\n");
+            }
+
+            System.out.println(String.format("Tasks saved in %s", SAVE_FILE_PATH));
+        } catch (IOException e) {
+            System.out.println("Error when writing to file.");
+        }
+    }
+
     public static void echo() {
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -228,6 +241,7 @@ public class Kleb {
                                     Available commands:
                                     mark, unmark, todo, deadline, event, delete, list, bye""");
                         }
+                        saveTasks();
                     } catch (Exception e) {
                         System.out.println(e);
                     }
