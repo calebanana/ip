@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,6 +16,8 @@ public class Kleb {
                                            """;
     private static final String BOT_NAME = "Kleb";
     private static final List<Task> tasks = new ArrayList<>();
+    private static final String SAVE_DIRECTORY = "./data";
+    private static final String SAVE_FILE_PATH = SAVE_DIRECTORY + "/tasks.txt";
 
     public static void line() {
         System.out.println("____________________________________________________________");
@@ -141,6 +147,56 @@ public class Kleb {
         }
     }
 
+    public static List<String> readFile() {
+        File save_dir = new File(SAVE_DIRECTORY);
+        File save_file = new File(SAVE_FILE_PATH);
+
+        if (!save_dir.exists()) {
+            save_dir.mkdirs();
+        }
+        if (!save_file.exists()) {
+            try {
+                save_file.createNewFile();
+                System.out.println("Created file.");
+            } catch (IOException e) {
+                System.out.println("Unable to create save file.");
+                return new ArrayList<>();
+            }
+        }
+
+        try {
+            List<String> fileContent = Files.readAllLines(Paths.get(SAVE_FILE_PATH));
+            return fileContent;
+        } catch (IOException e) {
+            System.out.println("Unable to read save file.");
+        }
+        return new ArrayList<>();
+    }
+
+    public static void loadTasks() {
+        List<String> fileContent = readFile();
+        for (String line : fileContent) {
+            String[] task = line.split("\\|");
+
+            try {
+                String type = task[0].trim();
+                boolean isDone = task[1].trim().equals("X");
+                String description = task[2].trim();
+
+                switch (type) {
+                    case "T" -> tasks.add(new ToDo(description, isDone));
+                    case "D" -> tasks.add(new Deadline(description, isDone, task[3].trim()));
+                    case "E" -> tasks.add(new Event(description, isDone, task[3].trim(),
+                            task[4].trim()));
+                    default -> System.out.println("Save file seems to be corrupted.");
+                }
+            } catch (Exception e) {
+                System.out.println("Save file seems to be corrupted.");
+                tasks.clear();
+            }
+        }
+    }
+
     public static void echo() {
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -182,6 +238,7 @@ public class Kleb {
     }
 
     public static void main(String[] args) {
+        loadTasks();
         hello();
         echo();
     }
