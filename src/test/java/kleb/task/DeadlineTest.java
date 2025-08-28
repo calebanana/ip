@@ -6,7 +6,13 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Contains unit tests for the Deadline class.
+ */
 public class DeadlineTest {
+    /**
+     * Tests if the toString method formats an undone deadline correctly for display.
+     */
     @Test
     public void toString_formatForDisplay_correctFormat() {
         LocalDateTime by = LocalDateTime.of(2025, 9, 1, 13, 0);
@@ -17,6 +23,9 @@ public class DeadlineTest {
         assertEquals(expected, deadline.toString());
     }
 
+    /**
+     * Tests if the getSaveString method formats an undone deadline correctly for saving.
+     */
     @Test
     public void getSaveString_formatForSave_correctFormat() {
         LocalDateTime by = LocalDateTime.of(2025, 9, 1, 13, 0);
@@ -27,6 +36,9 @@ public class DeadlineTest {
         assertEquals(expected, deadline.getSaveString());
     }
 
+    /**
+     * Tests if the toString method formats a completed deadline correctly for display.
+     */
     @Test
     public void toString_formatForDisplay_markedAsDone() {
         LocalDateTime by = LocalDateTime.of(2025, 9, 1, 13, 0);
@@ -37,6 +49,9 @@ public class DeadlineTest {
         assertEquals(expected, deadline.toString());
     }
 
+    /**
+     * Tests if the getSaveString method formats a completed deadline correctly for saving.
+     */
     @Test
     public void getSaveString_formatForSave_markedAsDone() {
         LocalDateTime by = LocalDateTime.of(2025, 9, 1, 13, 0);
