@@ -3,6 +3,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +25,15 @@ public class Kleb {
 
     public static void line() {
         System.out.println("____________________________________________________________");
+    }
+
+    public static LocalDateTime stringToDateTime(String dateTimeString) throws InvalidDateTimeException {
+        try {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+            return LocalDateTime.parse(dateTimeString, inputFormatter);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateTimeException();
+        }
     }
 
     public static void hello() {
@@ -93,43 +105,56 @@ public class Kleb {
 
     public static void addDeadline(String input) throws InvalidDeadlineException {
         String content = input.substring(8).trim();
+
         String[] parts = content.split("/by", 2);
-
-        if (parts.length != 2) {
+        if (parts.length < 2) {
             throw new InvalidDeadlineException();
-        } else {
-            String description = parts[0].trim();
-            String by = parts[1].trim();
+        }
 
-            if (description.equals("") || by.equals("")) {
-                throw new InvalidDeadlineException();
-            } else {
-                addTask(new Deadline(description, by));
-            }
+        String description = parts[0].trim();
+        String byStr = parts[1].trim();
+
+        if (description.isEmpty() || byStr.isEmpty()) {
+            throw new InvalidDeadlineException();
+        }
+
+        try {
+            LocalDateTime by = stringToDateTime(byStr);
+            addTask(new Deadline(description, by));
+        } catch (InvalidDateTimeException e) {
+            System.out.println(e);
         }
     }
 
     public static void addEvent(String input) throws InvalidEventException {
         String content = input.substring(5).trim();
-        String[] front = content.split("/from", 2);
 
-        if (front.length == 2) {
-            String[] back = front[1].split("/to", 2);
-            if (back.length == 2) {
-                String description = front[0].trim();
-                String from = back[0].trim();
-                String to = back[1].trim();
-
-                if (description.equals("") || from.equals("") || to.equals("")) {
-                    throw new InvalidEventException();
-                } else {
-                    addTask(new Event(description, from, to));
-                }
-            } else {
-                throw new InvalidEventException();
-            }
-        } else {
+        String[] descriptionParts = content.split("/from", 2);
+        if (descriptionParts.length < 2) {
             throw new InvalidEventException();
+        }
+
+        String[] timeParts = descriptionParts[1].split("/to", 2);
+        if (timeParts.length < 2) {
+            throw new InvalidEventException();
+        }
+
+        String description = descriptionParts[0].trim();
+        String fromStr = timeParts[0].trim();
+        String toStr = timeParts[1].trim();
+
+        if (description.isEmpty() || fromStr.isEmpty() || toStr.isEmpty()) {
+            throw new InvalidEventException();
+        }
+
+        try {
+            LocalDateTime from = stringToDateTime(fromStr);
+            LocalDateTime to = stringToDateTime(toStr);
+
+            addTask(new Event(description, from, to));
+
+        } catch (InvalidDateTimeException e) {
+            System.out.println(e);
         }
     }
 
@@ -186,9 +211,11 @@ public class Kleb {
 
                 switch (type) {
                     case "T" -> tasks.add(new ToDo(description, isDone));
-                    case "D" -> tasks.add(new Deadline(description, isDone, task[3].trim()));
-                    case "E" -> tasks.add(new Event(description, isDone, task[3].trim(),
-                            task[4].trim()));
+                    case "D" -> tasks.add(new Deadline(description, isDone,
+                            stringToDateTime(task[3].trim())));
+                    case "E" -> tasks.add(new Event(description, isDone,
+                            stringToDateTime(task[3].trim()),
+                            stringToDateTime(task[4].trim())));
                     default -> System.out.println("Save file seems to be corrupted.");
                 }
             } catch (Exception e) {
@@ -203,8 +230,6 @@ public class Kleb {
             for (Task task : tasks) {
                 fileWriter.write(task.toSaveString() + "\n");
             }
-
-            System.out.println(String.format("Tasks saved in %s", SAVE_FILE_PATH));
         } catch (IOException e) {
             System.out.println("Error when writing to file.");
         }
