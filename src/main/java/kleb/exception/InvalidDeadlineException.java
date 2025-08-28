@@ -1,3 +1,5 @@
+package kleb.exception;
+
 public class InvalidDeadlineException extends Exception {
     public InvalidDeadlineException() {
         super();

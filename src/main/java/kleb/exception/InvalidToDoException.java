@@ -1,3 +1,5 @@
+package kleb.exception;
+
 public class InvalidToDoException extends Exception {
     public InvalidToDoException() {
         super();
