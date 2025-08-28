@@ -35,6 +35,7 @@ application {
 shadowJar {
     archiveBaseName = "kleb"
     archiveClassifier = null
+    archiveFileName = 'kleb.jar'
 }
 
 run{
