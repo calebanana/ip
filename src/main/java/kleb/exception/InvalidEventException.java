@@ -1,3 +1,5 @@
+package kleb.exception;
+
 public class InvalidEventException extends Exception {
     public InvalidEventException() {
         super();

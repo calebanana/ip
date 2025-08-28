@@ -1,3 +1,9 @@
+package kleb;
+
+import kleb.io.Ui;
+import kleb.storage.Storage;
+import kleb.task.TaskList;
+
 public class Kleb {
     private final Ui ui;
     private final Storage storage;
