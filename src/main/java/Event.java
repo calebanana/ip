@@ -25,8 +25,8 @@ public class Event extends Task {
     }
 
     @Override
-    public String toSaveString() {
-        return String.format("E | %s | %s | %s", super.toSaveString(), dateToString(this.from,
+    public String getSaveString() {
+        return String.format("E | %s | %s | %s", super.getSaveString(), dateToString(this.from,
                 true), dateToString(this.to, true));
     }
 

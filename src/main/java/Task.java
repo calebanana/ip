@@ -23,7 +23,7 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public String toSaveString() {
+    public String getSaveString() {
         return String.format("%s | %s", getStatusIcon(), this.description);
     }
 

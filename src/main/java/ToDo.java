@@ -8,8 +8,8 @@ public class ToDo extends Task {
     }
 
     @Override
-    public String toSaveString() {
-        return String.format("T | %s", super.toSaveString());
+    public String getSaveString() {
+        return String.format("T | %s", super.getSaveString());
     }
 
     @Override
