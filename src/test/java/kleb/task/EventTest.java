@@ -6,7 +6,13 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Contains unit tests for the Event class.
+ */
 public class EventTest {
+    /**
+     * Tests if the toString method formats an undone event correctly for display.
+     */
     @Test
     public void toString_formatForDisplay_correctFormat() {
         LocalDateTime from = LocalDateTime.of(2025, 9, 1, 13, 0);
@@ -19,6 +25,9 @@ public class EventTest {
         assertEquals(expected, event.toString());
     }
 
+    /**
+     * Tests if the getSaveString method formats an undone event correctly for saving.
+     */
     @Test
     public void getSaveString_formatForSave_correctFormat() {
         LocalDateTime from = LocalDateTime.of(2025, 9, 1, 13, 0);
@@ -31,6 +40,9 @@ public class EventTest {
         assertEquals(expected, event.getSaveString());
     }
 
+    /**
+     * Tests if the toString method formats a completed event correctly for display.
+     */
     @Test
     public void toString_formatForDisplay_markedAsDone() {
         LocalDateTime from = LocalDateTime.of(2025, 9, 1, 13, 0);
@@ -43,6 +55,9 @@ public class EventTest {
         assertEquals(expected, event.toString());
     }
 
+    /**
+     * Tests if the getSaveString method formats a completed event correctly for saving.
+     */
     @Test
     public void getSaveString_formatForSave_markedAsDone() {
         LocalDateTime from = LocalDateTime.of(2025, 9, 1, 13, 0);
