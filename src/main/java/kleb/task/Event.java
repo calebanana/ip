@@ -28,13 +28,13 @@ public class Event extends Task {
 
     @Override
     public String getSaveString() {
-        return String.format("E | %s | %s | %s", super.getSaveString(), dateToString(this.from,
-                true), dateToString(this.to, true));
+        return String.format("E | %s | %s | %s", super.getSaveString(),
+                dateToString(this.from, true), dateToString(this.to, true));
     }
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), dateToString(this.from,
-                false), dateToString(this.to, false));
+        return String.format("[E]%s (from: %s to: %s)", super.toString(),
+                dateToString(this.from, false), dateToString(this.to, false));
     }
 }

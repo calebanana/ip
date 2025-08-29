@@ -35,6 +35,7 @@ public class Storage {
             try {
                 save_file.createNewFile();
                 System.out.println("Created file.");
+
             } catch (IOException e) {
                 System.out.println("Unable to create save file.");
             }
@@ -42,6 +43,7 @@ public class Storage {
 
         try {
             return Files.readAllLines(Paths.get(this.getFullPath()));
+
         } catch (IOException e) {
             System.out.println("Unable to read save file.");
         }

@@ -17,11 +17,11 @@ public abstract class Task {
         return (isDone ? "X" : " ");
     }
 
-    public void mark() {
+    public void setDone() {
         this.isDone = true;
     }
 
-    public void unmark() {
+    public void setUndone() {
         this.isDone = false;
     }
 
