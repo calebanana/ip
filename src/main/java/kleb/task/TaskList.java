@@ -77,7 +77,7 @@ public class TaskList {
         try {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
-            task.mark();
+            task.setDone();
             System.out.println("Good job! This task has been marked as done:\n\t" + task);
 
         } catch (NumberFormatException e) {
@@ -98,7 +98,7 @@ public class TaskList {
         try {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
-            task.unmark();
+            task.setUndone();
             System.out.println("Okay! This task has been marked as undone:\n\t" + task);
 
         } catch (NumberFormatException e) {

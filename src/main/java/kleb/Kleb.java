@@ -69,7 +69,9 @@ public class Kleb {
                                     Available commands:
                                     mark, unmark, todo, deadline, event, delete, list, bye""");
                         }
+
                         this.storage.save(this.taskList.getSaveList());
+
                     } catch (Exception e) {
                         System.out.println(e);
                     }

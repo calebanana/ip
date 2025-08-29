@@ -41,6 +41,7 @@ public class Parser {
         try {
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
             return LocalDateTime.parse(dateTimeString, inputFormatter);
+
         } catch (DateTimeParseException e) {
             throw new InvalidDateTimeException();
         }
