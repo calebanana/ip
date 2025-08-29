@@ -63,11 +63,13 @@ public class Kleb {
                             this.taskList.addEvent(input);
                         } else if (input.startsWith("delete")) {
                             this.taskList.deleteTask(input);
+                        } else if (input.startsWith("find")) {
+                            this.taskList.findTasks(input);
                         } else {
                             System.out.println("""
                                     Hmm, I don't quite understand your input.
                                     Available commands:
-                                    mark, unmark, todo, deadline, event, delete, list, bye""");
+                                    mark, unmark, todo, deadline, event, delete, find, list, bye""");
                         }
 
                         this.storage.save(this.taskList.getSaveList());
