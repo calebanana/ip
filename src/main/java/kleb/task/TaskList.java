@@ -170,6 +170,22 @@ public class TaskList {
         }
     }
 
+    public void findTasks(String input) {
+        String keyword = input.substring(4).trim();
+        List<Task> matchTasks = new ArrayList<>();
+
+        for (Task task : this.tasks) {
+            if (task.containsKeyword(keyword)) {
+                matchTasks.add(task);
+            }
+        }
+
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < matchTasks.size(); i++) {
+            System.out.println(String.format("%d. %s", i + 1, matchTasks.get(i)));
+        }
+    }
+
     public List<String> getSaveList() {
         List<String> saveList = new ArrayList<>();
 

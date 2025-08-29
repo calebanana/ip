@@ -25,6 +25,10 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public boolean containsKeyword(String keyword) {
+        return this.description.contains(keyword);
+    }
+
     public String getSaveString() {
         return String.format("%s | %s", getStatusIcon(), this.description);
     }
