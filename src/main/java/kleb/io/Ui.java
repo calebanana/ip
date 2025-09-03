@@ -6,8 +6,8 @@ package kleb.io;
  */
 public class Ui {
     private static final String LOGO = """
-             _    _      _    
-            | | _| | ___| |__ 
+             _    _      _
+            | | _| | ___| |__
             | |/ / |/ _ \\ '_ \\
             |   <| |  __/ |_) |
             |_|\\_\\_|\\___|_.__/

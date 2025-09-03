@@ -34,7 +34,7 @@ public class Storage {
      * Combines the directory and file name to get the full path.
      * @return The complete file path string.
      */
-    private String getFullPath(){
+    private String getFullPath() {
         return this.saveDirectory + this.saveFileName;
     }
 
@@ -45,15 +45,15 @@ public class Storage {
      * @return A list of strings representing the saved tasks.
      */
     public List<String> readFile() {
-        File save_dir = new File(this.saveDirectory);
-        File save_file = new File(this.getFullPath());
+        File saveDir = new File(this.saveDirectory);
+        File saveFile = new File(this.getFullPath());
 
-        if (!save_dir.exists()) {
-            save_dir.mkdirs();
+        if (!saveDir.exists()) {
+            saveDir.mkdirs();
         }
-        if (!save_file.exists()) {
+        if (!saveFile.exists()) {
             try {
-                save_file.createNewFile();
+                saveFile.createNewFile();
                 System.out.println("Created file.");
 
             } catch (IOException e) {

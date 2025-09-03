@@ -1,15 +1,15 @@
 package kleb.task;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import kleb.exception.InvalidDateTimeException;
 import kleb.exception.InvalidDeadlineException;
 import kleb.exception.InvalidEventException;
 import kleb.exception.InvalidToDoException;
 import kleb.io.Parser;
 import kleb.io.Ui;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Manages the list of tasks, including adding, deleting, and modifying them.
@@ -251,7 +251,7 @@ public class TaskList {
     public List<String> getSaveList() {
         List<String> saveList = new ArrayList<>();
 
-        for (Task task : tasks){
+        for (Task task : tasks) {
             saveList.add(task.getSaveString());
         }
 

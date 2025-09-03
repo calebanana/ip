@@ -1,5 +1,8 @@
 package kleb.exception;
 
+/**
+ * Represents an exception thrown when the command to create a todo task is incorrect.
+ */
 public class InvalidToDoException extends Exception {
     public InvalidToDoException() {
         super();

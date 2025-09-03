@@ -1,11 +1,11 @@
 package kleb.io;
 
-import kleb.exception.InvalidDateTimeException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
+import kleb.exception.InvalidDateTimeException;
 
 /**
  * Handles parsing of user input and date-time strings.

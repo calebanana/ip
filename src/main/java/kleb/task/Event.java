@@ -44,7 +44,7 @@ public class Event extends Task {
      * @param save Determines if the format is for saving or display.
      * @return The formatted date-time string.
      */
-    private String dateToString(LocalDateTime date, boolean save){
+    private String dateToString(LocalDateTime date, boolean save) {
         if (save) {
             return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
         }
