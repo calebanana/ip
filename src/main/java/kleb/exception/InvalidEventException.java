@@ -1,5 +1,8 @@
 package kleb.exception;
 
+/**
+ * Represents an exception thrown when the command to create an event task is incorrect.
+ */
 public class InvalidEventException extends Exception {
     public InvalidEventException() {
         super();

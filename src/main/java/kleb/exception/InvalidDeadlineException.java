@@ -1,5 +1,8 @@
 package kleb.exception;
 
+/**
+ * Represents an exception thrown when the command to create a deadline task is incorrect.
+ */
 public class InvalidDeadlineException extends Exception {
     public InvalidDeadlineException() {
         super();

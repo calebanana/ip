@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Represents a task with a description and a deadline.
  */
-public class Deadline extends Task{
+public class Deadline extends Task {
     private final LocalDateTime by;
 
     /**
@@ -39,7 +39,7 @@ public class Deadline extends Task{
      * @param save Determines if the format is for saving or display.
      * @return The formatted date-time string.
      */
-    private String dateToString(LocalDateTime dateTime, boolean save){
+    private String dateToString(LocalDateTime dateTime, boolean save) {
         if (save) {
             return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
         }
