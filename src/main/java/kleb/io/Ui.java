@@ -58,8 +58,8 @@ public class Ui {
     /**
      * Prints the exit message to the user.
      */
-    public void exit() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String exit() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
