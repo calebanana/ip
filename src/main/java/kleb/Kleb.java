@@ -5,8 +5,8 @@ import kleb.storage.Storage;
 import kleb.task.TaskList;
 
 /**
- * The main class for the Kleb chatbot application.
- * It initializes the application and runs the main command loop.
+ * Main class for the Kleb application.
+ * This class initializes and runs the task management chatbot.
  */
 public class Kleb {
     private static final String SAVE_FILE_PATH = "./data/tasks.txt";
@@ -14,12 +14,11 @@ public class Kleb {
     private final Storage storage;
     private final TaskList taskList;
 
-
     /**
-     * Constructs a new Kleb instance, initializing UI, storage, and task list.
-     * Attempts to load tasks from filePath, otherwise creates an empty list.
+     * Constructs a new Kleb instance.
+     * It initializes the UI, storage, and loads tasks from the specified file path.
      *
-     * @param filePath The path to the file where tasks are stored.
+     * @param filePath The path to the file where tasks are saved and loaded from.
      */
     public Kleb(String filePath) {
         this.ui = new Ui();
@@ -36,11 +35,11 @@ public class Kleb {
     }
 
     /**
-     * Starts the main application loop to handle user input and commands.
-     * The loop terminates on 'bye' and saves tasks after modifications.
+     * Starts the main loop of the Kleb application.
+     * It continuously prompts the user for input and processes commands until "bye" is entered.
      */
     public void run() {
-        this.ui.greeting();
+        this.ui.greet();
 
         String input;
 
@@ -51,6 +50,13 @@ public class Kleb {
         } while (!input.equals("bye"));
     }
 
+    /**
+     * Processes a single user command.
+     * It parses the input and delegates the action to the appropriate method in TaskList.
+     *
+     * @param input The raw user input string.
+     * @return A string response to be displayed to the user.
+     */
     public String handleCommand(String input) {
         switch (input) {
             case "bye" -> {
@@ -91,14 +97,8 @@ public class Kleb {
     }
 
     /**
-     * Generates a response for the user's chat message.
-     */
-    public String getResponse(String input) {
-        return handleCommand(input);
-    }
-
-    /**
      * The main entry point of the Kleb application.
+     * Creates a new Kleb instance and starts its execution.
      *
      * @param args Command line arguments (not used).
      */

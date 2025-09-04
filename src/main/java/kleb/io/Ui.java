@@ -47,7 +47,7 @@ public class Ui {
     /**
      * Prints the initial greeting message to the user.
      */
-    public void greeting() {
+    public void greet() {
         printLine();
         this.printLogo();
         System.out.println("Hello! I'm " + BOT_NAME + "!");
@@ -56,7 +56,9 @@ public class Ui {
     }
 
     /**
-     * Prints the exit message to the user.
+     * Returns the exit message to the user.
+     *
+     * @return Goodbye message.
      */
     public String exit() {
         return "Bye. Hope to see you again soon!";

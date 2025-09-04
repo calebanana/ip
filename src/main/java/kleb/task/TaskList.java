@@ -25,9 +25,10 @@ public class TaskList {
     }
 
     /**
-     * Constructs a TaskList from a list of strings read from a save file.
+     * Constructs a TaskList from a list of strings from the save file.
+     * It parses each string to reconstruct the original tasks.
      *
-     * @param taskList The list of strings from the save file.
+     * @param taskList A list of strings, each representing a saved task.
      */
     public TaskList(List<String> taskList) {
         this.tasks = new ArrayList<>();
@@ -57,7 +58,10 @@ public class TaskList {
     }
 
     /**
-     * Prints all tasks in the list to the console.
+     * Formats and returns the entire list of tasks as a single string.
+     * Each task is numbered and presented on a new line.
+     *
+     * @return A string representation of all tasks in the list.
      */
     public String printList() {
         String printStr = "Here are the tasks in your list:\n";
@@ -69,8 +73,10 @@ public class TaskList {
 
     /**
      * Marks a specific task as done based on user input.
+     * The input is expected to contain the 1-based index of the task.
      *
-     * @param input The user command, e.g., "mark 2".
+     * @param input The raw user command.
+     * @return A confirmation message or an error string.
      */
     public String markTask(String input) {
         String taskNo = input.substring(4).trim();
@@ -92,8 +98,10 @@ public class TaskList {
 
     /**
      * Marks a specific task as not done based on user input.
+     * The input is expected to contain the 1-based index of the task.
      *
-     * @param input The user command, e.g., "unmark 2".
+     * @param input The raw user command.
+     * @return A confirmation message or an error string.
      */
     public String unmarkTask(String input) {
         String taskNo = input.substring(6).trim();
@@ -114,9 +122,11 @@ public class TaskList {
     }
 
     /**
-     * Adds a new task to the list and prints a confirmation message.
+     * Adds a new task to the list and returns a confirmation message.
+     * This is a general helper method for adding any type of task.
      *
-     * @param task The task to be added.
+     * @param task The task object to be added.
+     * @return A string confirming the addition and showing the new task count.
      */
     public String addTask(Task task) {
         tasks.add(task);
@@ -128,10 +138,12 @@ public class TaskList {
     }
 
     /**
-     * Parses user input to create and add a new ToDo task.
+     * Parses the input string to create and add a new ToDo task.
+     * It extracts the description from the user command.
      *
-     * @param input The full user command for adding a todo.
-     * @throws InvalidToDoException If the input format is invalid.
+     * @param input The raw user command.
+     * @return A confirmation message from the addTask method.
+     * @throws InvalidToDoException If the todo description is empty.
      */
     public String addTodo(String input) throws InvalidToDoException {
         String description = input.substring(4).trim();
@@ -144,10 +156,12 @@ public class TaskList {
     }
 
     /**
-     * Parses user input to create and add a new Deadline task.
+     * Parses the input string to create and add a new Deadline task.
+     * It extracts the description and the due date.
      *
-     * @param input The full user command for adding a deadline.
-     * @throws InvalidDeadlineException If the input format is invalid.
+     * @param input The raw user command.
+     * @return A confirmation message from the addTask method.
+     * @throws InvalidDeadlineException If the input format is incorrect.
      */
     public String addDeadline(String input) throws InvalidDeadlineException {
         String content = input.substring(8).trim();
@@ -173,10 +187,12 @@ public class TaskList {
     }
 
     /**
-     * Parses user input to create and add a new Event task.
+     * Parses the input string to create and add a new Event task.
+     * It extracts the description and the start/end times.
      *
-     * @param input The full user command for adding an event.
-     * @throws InvalidEventException If the input format is invalid.
+     * @param input The raw user command.
+     * @return A confirmation message from the addTask method.
+     * @throws InvalidEventException If the input format is incorrect.
      */
     public String addEvent(String input) throws InvalidEventException {
         String content = input.substring(5).trim();
@@ -211,9 +227,11 @@ public class TaskList {
     }
 
     /**
-     * Deletes a task from the list based on user input.
+     * Deletes a specific task from the list based on user input.
+     * The input is expected to contain the 1-based index of the task to delete.
      *
-     * @param input The user command, e.g., "delete 2".
+     * @param input The raw user command.
+     * @return A confirmation message or an error string.
      */
     public String deleteTask(String input) {
         String taskNo = input.substring(6).trim();
@@ -234,9 +252,11 @@ public class TaskList {
     }
 
     /**
-     * Filter and find tasks based on keyword.
+     * Finds and lists all tasks containing a specific keyword.
+     * The search is case-sensitive.
      *
-     * @param input keyword to filter by.
+     * @param input The raw user command containing the keyword.
+     * @return A string containing the list of matching tasks.
      */
     public String findTasks(String input) {
         String keyword = input.substring(4).trim();
