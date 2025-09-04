@@ -84,6 +84,13 @@ public class Kleb {
     }
 
     /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "kleb heard: " + input;
+    }
+
+    /**
      * The main entry point of the Kleb application.
      *
      * @param args Command line arguments (not used).
