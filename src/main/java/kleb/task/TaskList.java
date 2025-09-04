@@ -59,11 +59,12 @@ public class TaskList {
     /**
      * Prints all tasks in the list to the console.
      */
-    public void printList() {
-        System.out.println("Here are the tasks in your list:");
+    public String printList() {
+        String printStr = "Here are the tasks in your list:\n";
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(String.format("%d. %s", i + 1, tasks.get(i)));
+            printStr += String.format("%d. %s", i + 1, tasks.get(i)) + "\n";
         }
+        return printStr;
     }
 
     /**
@@ -71,19 +72,21 @@ public class TaskList {
      *
      * @param input The user command, e.g., "mark 2".
      */
-    public void markTask(String input) {
+    public String markTask(String input) {
         String taskNo = input.substring(4).trim();
 
         try {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             task.setDone();
-            System.out.println("Good job! This task has been marked as done:\n\t" + task);
+            return """
+                    Good job! This task has been marked as done:
+                    \t""" + task;
 
         } catch (NumberFormatException e) {
-            System.out.println("Uh-oh! Input is invalid!");
+            return "Uh-oh! Input is invalid!";
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Uh-oh! Enter a number within the list.");
+            return "Uh-oh! Enter a number within the list.";
         }
     }
 
@@ -92,19 +95,21 @@ public class TaskList {
      *
      * @param input The user command, e.g., "unmark 2".
      */
-    public void unmarkTask(String input) {
+    public String unmarkTask(String input) {
         String taskNo = input.substring(6).trim();
 
         try {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             task.setUndone();
-            System.out.println("Okay! This task has been marked as undone:\n\t" + task);
+            return """
+                    Okay! This task has been marked as undone:
+                    \t""" + task;
 
         } catch (NumberFormatException e) {
-            System.out.println("Uh-oh! Input is invalid!");
+            return "Uh-oh! Input is invalid!";
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Uh-oh! Enter a number within the list.");
+            return "Uh-oh! Enter a number within the list.";
         }
     }
 
@@ -113,10 +118,13 @@ public class TaskList {
      *
      * @param task The task to be added.
      */
-    public void addTask(Task task) {
+    public String addTask(Task task) {
         tasks.add(task);
-        System.out.println("Added a task to your list:\n\t" + task);
-        System.out.println(String.format("Now you have %d task(s) in the list.", tasks.size()));
+        return String.format("""
+                        Added a task to your list:
+                        \t%s
+                        Now you have %d task(s) in the list.
+                        """, task, tasks.size());
     }
 
     /**
@@ -125,13 +133,13 @@ public class TaskList {
      * @param input The full user command for adding a todo.
      * @throws InvalidToDoException If the input format is invalid.
      */
-    public void addTodo(String input) throws InvalidToDoException {
+    public String addTodo(String input) throws InvalidToDoException {
         String description = input.substring(4).trim();
 
-        if (description.equals("")) {
+        if (description.isEmpty()) {
             throw new InvalidToDoException();
         } else {
-            addTask(new ToDo(description));
+            return addTask(new ToDo(description));
         }
     }
 
@@ -141,7 +149,7 @@ public class TaskList {
      * @param input The full user command for adding a deadline.
      * @throws InvalidDeadlineException If the input format is invalid.
      */
-    public void addDeadline(String input) throws InvalidDeadlineException {
+    public String addDeadline(String input) throws InvalidDeadlineException {
         String content = input.substring(8).trim();
 
         String[] parts = content.split("/by", 2);
@@ -158,9 +166,9 @@ public class TaskList {
 
         try {
             LocalDateTime by = Parser.stringToDateTime(byStr);
-            addTask(new Deadline(description, by));
+            return addTask(new Deadline(description, by));
         } catch (InvalidDateTimeException e) {
-            System.out.println(e);
+            return e.toString();
         }
     }
 
@@ -170,7 +178,7 @@ public class TaskList {
      * @param input The full user command for adding an event.
      * @throws InvalidEventException If the input format is invalid.
      */
-    public void addEvent(String input) throws InvalidEventException {
+    public String addEvent(String input) throws InvalidEventException {
         String content = input.substring(5).trim();
 
         String[] descriptionParts = content.split("/from", 2);
@@ -195,10 +203,10 @@ public class TaskList {
             LocalDateTime from = Parser.stringToDateTime(fromStr);
             LocalDateTime to = Parser.stringToDateTime(toStr);
 
-            addTask(new Event(description, from, to));
+            return addTask(new Event(description, from, to));
 
         } catch (InvalidDateTimeException e) {
-            System.out.println(e);
+            return e.toString();
         }
     }
 
@@ -207,18 +215,21 @@ public class TaskList {
      *
      * @param input The user command, e.g., "delete 2".
      */
-    public void deleteTask(String input) {
+    public String deleteTask(String input) {
         String taskNo = input.substring(6).trim();
 
         try {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             tasks.remove(task);
-            System.out.println("Poof! This task has been deleted:\n\t" + task);
+            return """
+                    Poof! This task has been deleted:
+                    \t""" + task;
+
         } catch (NumberFormatException e) {
-            System.out.println("Uh-oh! Input is invalid!");
+            return "Uh-oh! Input is invalid!";
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Uh-oh! Enter a number within the list.");
+            return "Uh-oh! Enter a number within the list.";
         }
     }
 
@@ -227,7 +238,7 @@ public class TaskList {
      *
      * @param input keyword to filter by.
      */
-    public void findTasks(String input) {
+    public String findTasks(String input) {
         String keyword = input.substring(4).trim();
         List<Task> matchTasks = new ArrayList<>();
 
@@ -237,10 +248,12 @@ public class TaskList {
             }
         }
 
-        System.out.println("Here are the matching tasks in your list:");
+        String printStr = "Here are the matching tasks in your list:\n";
         for (int i = 0; i < matchTasks.size(); i++) {
-            System.out.println(String.format("%d. %s", i + 1, matchTasks.get(i)));
+            printStr += String.format("%d. %s", i + 1, matchTasks.get(i)) + "\n";
         }
+
+        return printStr;
     }
 
     /**

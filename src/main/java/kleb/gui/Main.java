@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import kleb.Kleb;
 
 /**
@@ -24,7 +23,10 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setKleb(kleb);  // inject the Duke instance
+            stage.setMinHeight(220);
+            stage.setMinWidth(417);
+            stage.setMaxWidth(417);
+            fxmlLoader.<MainWindow>getController().setKleb(kleb);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
