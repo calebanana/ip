@@ -48,6 +48,7 @@ public class Kleb {
             this.ui.printLine();
             System.out.println(handleCommand(input));
         } while (!input.equals("bye"));
+        assert input.equals("bye") : "Exit keyword should be 'bye'";
     }
 
     /**

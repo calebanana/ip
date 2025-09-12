@@ -16,6 +16,7 @@ public abstract class Task {
      */
     public Task(String description) {
         this.description = description;
+        assert !description.isEmpty() : "Description should not be empty.";
     }
 
     /**
@@ -26,6 +27,7 @@ public abstract class Task {
      */
     public Task(String description, boolean isDone) {
         this.description = description;
+        assert !description.isEmpty() : "Description should not be empty.";
         this.isDone = isDone;
     }
 
