@@ -3,6 +3,8 @@ package kleb.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import kleb.io.Parser;
+
 /**
  * Represents a task with a description and a deadline.
  */
@@ -33,27 +35,16 @@ public class Deadline extends Task {
     }
 
     /**
-     * Converts a LocalDateTime object to a formatted string.
-     *
-     * @param dateTime The LocalDateTime to format.
-     * @param save Determines if the format is for saving or display.
-     * @return The formatted date-time string.
-     */
-    private String dateToString(LocalDateTime dateTime, boolean save) {
-        if (save) {
-            return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
-        }
-        return dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy HHmm"));
-    }
-
-    /**
      * Gets the save-formatted string for the Deadline task.
      *
      * @return The formatted string for file storage.
      */
     @Override
     public String getSaveString() {
-        return String.format("D | %s | %s", super.getSaveString(), dateToString(this.by, true));
+        String taskSaveString = super.getSaveString();
+        String bySaveString = Parser.dateToString(this.by, Parser.DateTimeFormat.SAVE);
+
+        return String.format("D | %s | %s", taskSaveString, bySaveString);
     }
 
     /**
@@ -63,6 +54,9 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return String.format("[D]%s (by: %s)", super.toString(), dateToString(this.by, false));
+        String taskPrintString = super.toString();
+        String byPrintString = Parser.dateToString(this.by, Parser.DateTimeFormat.PRINT);
+
+        return String.format("[D]%s (by: %s)", taskPrintString, byPrintString);
     }
 }

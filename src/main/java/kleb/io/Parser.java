@@ -12,6 +12,15 @@ import kleb.exception.InvalidDateTimeException;
  */
 public class Parser {
     private final Scanner scanner;
+    private static final DateTimeFormatter SAVE_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd " + "HHmm");
+    private static final DateTimeFormatter PRINT_FORMAT =
+            DateTimeFormatter.ofPattern("MMM dd yyyy HHmm");
+
+    public enum DateTimeFormat {
+        SAVE,
+        PRINT
+    }
 
     /**
      * Constructs a new Parser instance.
@@ -27,6 +36,27 @@ public class Parser {
      */
     public String getInput() {
         return this.scanner.nextLine();
+    }
+
+    /**
+     * Converts a LocalDateTime object to a formatted string.
+     *
+     * @param date The LocalDateTime to format.
+     * @param format The format to convert the date into.
+     * @return The formatted date-time string.
+     */
+    public static String dateToString(LocalDateTime date, DateTimeFormat format) {
+        switch (format) {
+            case SAVE -> {
+                return date.format(Parser.SAVE_FORMAT);
+            }
+            case PRINT -> {
+                return date.format(Parser.PRINT_FORMAT);
+            }
+            default -> {
+                return "Invalid date.";
+            }
+        }
     }
 
     /**
