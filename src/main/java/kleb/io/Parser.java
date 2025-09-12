@@ -67,7 +67,8 @@ public class Parser {
      * @return The corresponding LocalDateTime object.
      * @throws InvalidDateTimeException If the string format is invalid.
      */
-    public static LocalDateTime stringToDateTime(String dateTimeString) throws InvalidDateTimeException {
+    public static LocalDateTime stringToDateTime(String dateTimeString)
+            throws InvalidDateTimeException {
         try {
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
             return LocalDateTime.parse(dateTimeString, inputFormatter);
