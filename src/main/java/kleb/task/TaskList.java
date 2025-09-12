@@ -85,6 +85,8 @@ public class TaskList {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             task.setDone();
+            assert task.isDone : "isDone should have been set to true.";
+
             return """
                     Good job! This task has been marked as done:
                     \t""" + task;
@@ -110,6 +112,8 @@ public class TaskList {
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             task.setUndone();
+            assert !task.isDone : "isDone should have been set to false.";
+
             return """
                     Okay! This task has been marked as undone:
                     \t""" + task;
@@ -129,7 +133,10 @@ public class TaskList {
      * @return A string confirming the addition and showing the new task count.
      */
     public String addTask(Task task) {
+        int numOfTasks = tasks.size();
         tasks.add(task);
+        assert tasks.size() == numOfTasks + 1 : "Tasks should have increased by 1.";
+
         return String.format("""
                         Added a task to your list:
                         \t%s
@@ -237,9 +244,12 @@ public class TaskList {
         String taskNo = input.substring(6).trim();
 
         try {
+            int numOfTasks = tasks.size();
             int taskIdx = Integer.parseInt(taskNo);
             Task task = tasks.get(taskIdx - 1);
             tasks.remove(task);
+            assert tasks.size() == numOfTasks - 1 : "Tasks should have decreased by 1.";
+
             return """
                     Poof! This task has been deleted:
                     \t""" + task;
