@@ -17,8 +17,8 @@ public class Event extends Task {
      * @param from The start time of the event.
      * @param to The end time of the event.
      */
-    public Event(String description, LocalDateTime from, LocalDateTime to) {
-        super(description);
+    public Event(String description, TaskPriority priority, LocalDateTime from, LocalDateTime to) {
+        super(description, priority);
         this.from = from;
         this.to = to;
     }
@@ -31,8 +31,9 @@ public class Event extends Task {
      * @param from The start time of the event.
      * @param to The end time of the event.
      */
-    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) {
-        super(description, isDone);
+    public Event(String description, TaskPriority priority, boolean isDone, LocalDateTime from,
+                 LocalDateTime to) {
+        super(description, priority, isDone);
         this.from = from;
         this.to = to;
     }

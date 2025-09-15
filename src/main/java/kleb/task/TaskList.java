@@ -38,19 +38,22 @@ public class TaskList {
 
             try {
                 String type = task[0].trim();
-                boolean isDone = task[1].trim().equals("X");
-                String description = task[2].trim();
+                int priorityLevel = Integer.parseInt(task[1].trim());
+                TaskPriority priority = TaskPriority.getPriorityFromInt(priorityLevel);
+                boolean isDone = task[2].trim().equals("X");
+                String description = task[3].trim();
 
                 switch (type) {
-                    case "T" -> tasks.add(new ToDo(description, isDone));
-                    case "D" -> tasks.add(new Deadline(description, isDone,
-                            Parser.stringToDateTime(task[3].trim())));
-                    case "E" -> tasks.add(new Event(description, isDone,
-                            Parser.stringToDateTime(task[3].trim()),
+                    case "T" -> tasks.add(new ToDo(description, priority, isDone));
+                    case "D" -> tasks.add(new Deadline(description, priority, isDone,
                             Parser.stringToDateTime(task[4].trim())));
+                    case "E" -> tasks.add(new Event(description, priority, isDone,
+                            Parser.stringToDateTime(task[4].trim()),
+                            Parser.stringToDateTime(task[5].trim())));
                     default -> Ui.printLoadError();
                 }
             } catch (Exception e) {
+                System.out.println(e);
                 Ui.printLoadError();
                 tasks.clear();
             }
@@ -158,7 +161,7 @@ public class TaskList {
         if (description.isEmpty()) {
             throw new InvalidToDoException();
         } else {
-            return addTask(new ToDo(description));
+            return addTask(new ToDo(description, TaskPriority.NONE));
         }
     }
 
@@ -187,7 +190,7 @@ public class TaskList {
 
         try {
             LocalDateTime by = Parser.stringToDateTime(byStr);
-            return addTask(new Deadline(description, by));
+            return addTask(new Deadline(description, TaskPriority.NONE, by));
         } catch (InvalidDateTimeException e) {
             return e.toString();
         }
@@ -226,7 +229,7 @@ public class TaskList {
             LocalDateTime from = Parser.stringToDateTime(fromStr);
             LocalDateTime to = Parser.stringToDateTime(toStr);
 
-            return addTask(new Event(description, from, to));
+            return addTask(new Event(description, TaskPriority.NONE, from, to));
 
         } catch (InvalidDateTimeException e) {
             return e.toString();
@@ -284,6 +287,27 @@ public class TaskList {
         }
 
         return printStr;
+    }
+
+    public String setPriority(String input) {
+        String inputParamString = input.substring(8).trim();
+        String[] priorityParts = inputParamString.split("/priority", 2);
+        if (priorityParts.length != 2) {
+            return "Syntax: priority <taskIndex> /priority <int 1-3>";
+        }
+        try {
+            int taskId = Integer.parseInt(priorityParts[0].trim());
+            int priorityLevel = Integer.parseInt(priorityParts[1].trim());
+            tasks.get(taskId - 1).setPriority(priorityLevel);
+            return String.format("""
+                                 Set priority to task:
+                                     %s
+                                 """, tasks.get(taskId - 1));
+        } catch (NumberFormatException e) {
+            return "Oops! That does not seem like a number.";
+        } catch (IndexOutOfBoundsException e) {
+            return "Oops! Please specific a number within the list.";
+        }
     }
 
     /**
