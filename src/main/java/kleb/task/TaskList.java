@@ -194,13 +194,12 @@ public class TaskList {
 
         LocalDateTime by;
         try {
-            LocalDateTime by = Parser.stringToDateTime(byStr);
-            return addTask(new Deadline(description, TaskPriority.NONE, by));
+            by = Parser.stringToDateTime(byStr);
         } catch (InvalidDateTimeException e) {
             return e.toString();
         }
 
-        return addTask(new Deadline(description, by));
+        return addTask(new Deadline(description, TaskPriority.NONE, by));
     }
 
     /**
@@ -235,15 +234,13 @@ public class TaskList {
         LocalDateTime from;
         LocalDateTime to;
         try {
-            LocalDateTime from = Parser.stringToDateTime(fromStr);
-            LocalDateTime to = Parser.stringToDateTime(toStr);
-
-            return addTask(new Event(description, TaskPriority.NONE, from, to));
+            from = Parser.stringToDateTime(fromStr);
+            to = Parser.stringToDateTime(toStr);
         } catch (InvalidDateTimeException e) {
             return e.toString();
         }
 
-        return addTask(new Event(description, from, to));
+        return addTask(new Event(description, TaskPriority.NONE, from, to));
     }
 
     /**
