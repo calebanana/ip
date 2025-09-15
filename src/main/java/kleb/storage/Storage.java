@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import kleb.exception.FilePermissionException;
+
 /**
  * Manages loading and saving tasks to a file.
  * Handles file and directory creation if they do not exist.
@@ -38,36 +40,40 @@ public class Storage {
         return this.saveDirectory + this.saveFileName;
     }
 
-    /**
-     * Reads all lines from the save file into a list of strings.
-     * Creates the directory and file if they don't exist.
-     *
-     * @return A list of strings representing the saved tasks.
-     */
-    public List<String> readFile() {
+    private void checkSaveFileExists() throws FilePermissionException {
         File saveDir = new File(this.saveDirectory);
         File saveFile = new File(this.getFullPath());
 
         if (!saveDir.exists()) {
             saveDir.mkdirs();
         }
+
         if (!saveFile.exists()) {
             try {
                 saveFile.createNewFile();
                 System.out.println("Created file.");
 
             } catch (IOException e) {
-                System.out.println("Unable to create save file.");
+                throw new FilePermissionException();
             }
         }
+    }
+
+    /**
+     * Reads all lines from the save file into a list of strings.
+     * Creates the directory and file if they don't exist.
+     *
+     * @return A list of strings representing the saved tasks.
+     */
+    public List<String> readFile() throws FilePermissionException{
+        checkSaveFileExists();
 
         try {
-            return Files.readAllLines(Paths.get(this.getFullPath()));
-
+            List<String> fileContent = Files.readAllLines(Paths.get(this.getFullPath()));
+            return fileContent;
         } catch (IOException e) {
-            System.out.println("Unable to read save file.");
+            throw new FilePermissionException();
         }
-        return new ArrayList<>();
     }
 
     /**

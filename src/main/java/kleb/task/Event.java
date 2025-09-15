@@ -1,7 +1,8 @@
 package kleb.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import kleb.io.Parser;
 
 /**
  * Represents an event task with a start and end time.
@@ -38,28 +39,17 @@ public class Event extends Task {
     }
 
     /**
-     * Converts a LocalDateTime object to a formatted string.
-     *
-     * @param date The LocalDateTime to format.
-     * @param save Determines if the format is for saving or display.
-     * @return The formatted date-time string.
-     */
-    private String dateToString(LocalDateTime date, boolean save) {
-        if (save) {
-            return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
-        }
-        return date.format(DateTimeFormatter.ofPattern("MMM dd yyyy HHmm"));
-    }
-
-    /**
      * Gets the save-formatted string for the Event task.
      *
      * @return The formatted string for file storage.
      */
     @Override
     public String getSaveString() {
-        return String.format("E | %s | %s | %s", super.getSaveString(),
-                dateToString(this.from, true), dateToString(this.to, true));
+        String taskSaveString = super.getSaveString();
+        String fromSaveString = Parser.dateToString(this.from, Parser.DateTimeFormat.SAVE);
+        String toSaveString = Parser.dateToString(this.to, Parser.DateTimeFormat.SAVE);
+
+        return String.format("E | %s | %s | %s", taskSaveString, fromSaveString, toSaveString);
     }
 
     /**
@@ -69,7 +59,11 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(),
-                dateToString(this.from, false), dateToString(this.to, false));
+        String taskPrintString = super.toString();
+        String fromPrintString = Parser.dateToString(this.from, Parser.DateTimeFormat.PRINT);
+        String toPrintString = Parser.dateToString(this.to, Parser.DateTimeFormat.PRINT);
+
+        return String.format("[E]%s (from: %s to: %s)",
+                taskPrintString, fromPrintString, toPrintString);
     }
 }
