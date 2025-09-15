@@ -33,6 +33,10 @@ public class TaskList {
     public TaskList(List<String> taskList) {
         this.tasks = new ArrayList<>();
 
+        loadTaskList(taskList);
+    }
+
+    public void loadTaskList(List<String> taskList) {
         for (String line : taskList) {
             String[] task = line.split("\\|");
 
@@ -159,6 +163,7 @@ public class TaskList {
 
         if (description.isEmpty()) {
             throw new InvalidToDoException();
+
         } else {
             return addTask(new ToDo(description, TaskPriority.NONE));
         }
@@ -187,12 +192,15 @@ public class TaskList {
             throw new InvalidDeadlineException();
         }
 
+        LocalDateTime by;
         try {
             LocalDateTime by = Parser.stringToDateTime(byStr);
             return addTask(new Deadline(description, TaskPriority.NONE, by));
         } catch (InvalidDateTimeException e) {
             return e.toString();
         }
+
+        return addTask(new Deadline(description, by));
     }
 
     /**
@@ -224,15 +232,18 @@ public class TaskList {
             throw new InvalidEventException();
         }
 
+        LocalDateTime from;
+        LocalDateTime to;
         try {
             LocalDateTime from = Parser.stringToDateTime(fromStr);
             LocalDateTime to = Parser.stringToDateTime(toStr);
 
             return addTask(new Event(description, TaskPriority.NONE, from, to));
-
         } catch (InvalidDateTimeException e) {
             return e.toString();
         }
+
+        return addTask(new Event(description, from, to));
     }
 
     /**
