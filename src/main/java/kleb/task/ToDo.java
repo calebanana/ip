@@ -9,8 +9,8 @@ public class ToDo extends Task {
      *
      * @param description The description of the ToDo.
      */
-    public ToDo(String description) {
-        super(description);
+    public ToDo(String description, TaskPriority priority) {
+        super(description, priority);
     }
 
     /**
@@ -19,8 +19,8 @@ public class ToDo extends Task {
      * @param description The description of the ToDo.
      * @param isDone The completion status.
      */
-    public ToDo(String description, boolean isDone) {
-        super(description, isDone);
+    public ToDo(String description, TaskPriority priority, boolean isDone) {
+        super(description, priority, isDone);
     }
 
     /**

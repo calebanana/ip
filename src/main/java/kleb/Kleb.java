@@ -82,11 +82,14 @@ public class Kleb {
                         return this.taskList.deleteTask(input);
                     } else if (input.startsWith("find")) {
                         return this.taskList.findTasks(input);
+                    } else if (input.startsWith("priority")) {
+                        return this.taskList.setPriority(input);
                     } else {
                         return """
                                 Hmm, I don't quite understand your input.
                                 Available commands:
-                                mark, unmark, todo, deadline, event, delete, find, list, bye""";
+                                \tmark, unmark, todo, deadline, event,
+                                \tdelete, find, list, priority, bye""";
                     }
                 } catch (Exception e) {
                     return e.toString();

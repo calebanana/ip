@@ -7,6 +7,7 @@ package kleb.task;
 public abstract class Task {
     protected final String description;
     protected boolean isDone = false;
+    protected TaskPriority priority;
 
     /**
      * Constructs a new Task with a description.
@@ -14,9 +15,10 @@ public abstract class Task {
      *
      * @param description The task's description.
      */
-    public Task(String description) {
+    public Task(String description, TaskPriority priority) {
         this.description = description;
         assert !description.isEmpty() : "Description should not be empty.";
+        this.priority = priority;
     }
 
     /**
@@ -25,9 +27,10 @@ public abstract class Task {
      * @param description The task's description.
      * @param isDone The completion status of the task.
      */
-    public Task(String description, boolean isDone) {
+    public Task(String description, TaskPriority priority, boolean isDone) {
         this.description = description;
         assert !description.isEmpty() : "Description should not be empty.";
+        this.priority = priority;
         this.isDone = isDone;
     }
 
@@ -39,6 +42,18 @@ public abstract class Task {
      */
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
+    }
+
+    public String getPriorityStr() {
+        return this.priority.toString();
+    }
+
+    public int getPriorityLevel() {
+        return this.priority.getPriorityLevel();
+    }
+
+    public void setPriority(int priorityLevel) {
+        this.priority = TaskPriority.getPriorityFromInt(priorityLevel);
     }
 
     /**
@@ -72,7 +87,7 @@ public abstract class Task {
      * @return A formatted string for file storage.
      */
     public String getSaveString() {
-        return String.format("%s | %s", getStatusIcon(), this.description);
+        return String.format("%d | %s | %s", getPriorityLevel(), getStatusIcon(), this.description);
     }
 
     /**
@@ -82,6 +97,7 @@ public abstract class Task {
      */
     @Override
     public String toString() {
-        return String.format("[%s] %s", getStatusIcon(), this.description);
+        return String.format("[%s][%s] %s", getPriorityStr(), getStatusIcon(),
+                    this.description);
     }
 }

@@ -16,8 +16,8 @@ public class Deadline extends Task {
      * @param description The description of the task.
      * @param by The deadline for the task.
      */
-    public Deadline(String description, LocalDateTime by) {
-        super(description);
+    public Deadline(String description, TaskPriority priority, LocalDateTime by) {
+        super(description, priority);
         this.by = by;
     }
 
@@ -28,8 +28,8 @@ public class Deadline extends Task {
      * @param isDone The completion status.
      * @param by The deadline for the task.
      */
-    public Deadline(String description, boolean isDone, LocalDateTime by) {
-        super(description, isDone);
+    public Deadline(String description, TaskPriority priority, boolean isDone, LocalDateTime by) {
+        super(description, priority, isDone);
         this.by = by;
     }
 
