@@ -53,7 +53,6 @@ public class TaskList {
                     default -> Ui.printLoadError();
                 }
             } catch (Exception e) {
-                System.out.println(e);
                 Ui.printLoadError();
                 tasks.clear();
             }
