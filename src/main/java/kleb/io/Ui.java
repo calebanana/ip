@@ -47,12 +47,12 @@ public class Ui {
     /**
      * Prints the initial greeting message to the user.
      */
-    public void greet() {
-        printLine();
-        this.printLogo();
-        System.out.println("Hello! I'm " + BOT_NAME + "!");
-        System.out.println("What can I do for you?");
-        printLine();
+    public static String greet() {
+        String output = LOGO;
+
+        output += String.format("Hello! I'm %s!\n", BOT_NAME);
+        output += "What can I do for you?";
+        return output;
     }
 
     /**

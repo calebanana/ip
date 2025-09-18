@@ -59,7 +59,10 @@ public class Kleb {
      * @return A string response to be displayed to the user.
      */
     public String handleCommand(String input) {
-        switch (input) {
+        switch (input.trim()) {
+            case "" -> {
+                return "";
+            }
             case "bye" -> {
                 return this.ui.exit();
             }

@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import kleb.Kleb;
+import kleb.io.Ui;
 
 /**
  * Controller for the MainWindow.
@@ -20,8 +21,6 @@ public class MainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Kleb kleb;
 
@@ -34,6 +33,9 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void initialize() {
+        dialogContainer.getChildren().addAll(
+                DialogBox.getKlebDialog(Ui.greet(), klebImage)
+        );
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
@@ -55,10 +57,13 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = kleb.handleCommand(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getKlebDialog(response, klebImage)
-        );
+
+        if (!response.isEmpty()) {
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getKlebDialog(response, klebImage)
+            );
+        }
         userInput.clear();
     }
 }
