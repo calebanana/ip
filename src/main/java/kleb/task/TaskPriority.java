@@ -16,7 +16,8 @@ public enum TaskPriority {
         this.priorityLevel = priorityLevel;
     }
 
-    public static TaskPriority getPriorityFromInt(int priorityLevel) throws InvalidPriorityException {
+    public static TaskPriority getPriorityFromInt(int priorityLevel)
+            throws InvalidPriorityException {
         return switch (priorityLevel) {
             case 1 -> HIGH;
             case 2 -> MEDIUM;
