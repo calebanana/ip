@@ -1,6 +1,5 @@
 package kleb.exception;
 
-
 /**
  * Represents an exception thrown when a date-time string does not match the expected format.
  */

@@ -1,5 +1,7 @@
 package kleb.task;
 
+import kleb.exception.InvalidPriorityException;
+
 /**
  * Represents an abstract task with a description and a completion status.
  * This is the base class for ToDo, Deadline, and Event tasks.
@@ -52,8 +54,12 @@ public abstract class Task {
         return this.priority.getPriorityLevel();
     }
 
-    public void setPriority(int priorityLevel) {
-        this.priority = TaskPriority.getPriorityFromInt(priorityLevel);
+    public void setPriority(int priorityLevel) throws InvalidPriorityException{
+        try {
+            this.priority = TaskPriority.getPriorityFromInt(priorityLevel);
+        } catch (InvalidPriorityException e) {
+            throw new InvalidPriorityException();
+        }
     }
 
     /**

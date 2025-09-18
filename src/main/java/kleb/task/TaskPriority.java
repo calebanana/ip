@@ -1,5 +1,7 @@
 package kleb.task;
 
+import kleb.exception.InvalidPriorityException;
+
 public enum TaskPriority {
     HIGH("High", 1),
     MEDIUM("Medium", 2),
@@ -14,14 +16,14 @@ public enum TaskPriority {
         this.priorityLevel = priorityLevel;
     }
 
-    public static TaskPriority getPriorityFromInt(int priorityLevel) {
+    public static TaskPriority getPriorityFromInt(int priorityLevel) throws InvalidPriorityException {
         return switch (priorityLevel) {
             case 1 -> HIGH;
             case 2 -> MEDIUM;
             case 3 -> LOW;
             case 0 -> NONE;
             default ->
-                    throw new IllegalArgumentException("Invalid priority level: " + priorityLevel);
+                    throw new InvalidPriorityException();
         };
     }
 

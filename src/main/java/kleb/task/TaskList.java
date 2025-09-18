@@ -7,6 +7,7 @@ import java.util.List;
 import kleb.exception.InvalidDateTimeException;
 import kleb.exception.InvalidDeadlineException;
 import kleb.exception.InvalidEventException;
+import kleb.exception.InvalidPriorityException;
 import kleb.exception.InvalidToDoException;
 import kleb.io.Parser;
 import kleb.io.Ui;
@@ -48,13 +49,13 @@ public class TaskList {
                 String description = task[3].trim();
 
                 switch (type) {
-                    case "T" -> tasks.add(new ToDo(description, priority, isDone));
-                    case "D" -> tasks.add(new Deadline(description, priority, isDone,
-                            Parser.stringToDateTime(task[4].trim())));
-                    case "E" -> tasks.add(new Event(description, priority, isDone,
-                            Parser.stringToDateTime(task[4].trim()),
-                            Parser.stringToDateTime(task[5].trim())));
-                    default -> Ui.printLoadError();
+                case "T" -> tasks.add(new ToDo(description, priority, isDone));
+                case "D" -> tasks.add(new Deadline(description, priority, isDone,
+                        Parser.stringToDateTime(task[4].trim())));
+                case "E" -> tasks.add(new Event(description, priority, isDone,
+                        Parser.stringToDateTime(task[4].trim()),
+                        Parser.stringToDateTime(task[5].trim())));
+                default -> Ui.printLoadError();
                 }
             } catch (Exception e) {
                 Ui.printLoadError();
@@ -313,7 +314,9 @@ public class TaskList {
         } catch (NumberFormatException e) {
             return "Oops! That does not seem like a number.";
         } catch (IndexOutOfBoundsException e) {
-            return "Oops! Please specific a number within the list.";
+            return "Oops! Please specify a number within the list.";
+        } catch (InvalidPriorityException e) {
+            return "Oops! Please enter a valid priority level [1/2/3/0].";
         }
     }
 
