@@ -39,8 +39,6 @@ public class Kleb {
      * It continuously prompts the user for input and processes commands until "bye" is entered.
      */
     public void run() {
-        this.ui.greet();
-
         String input;
 
         do {
@@ -64,7 +62,7 @@ public class Kleb {
                 return "";
             }
             case "bye" -> {
-                return this.ui.exit();
+                return Ui.exit();
             }
             case "list" -> {
                 return this.taskList.printList();

@@ -31,13 +31,6 @@ public class Ui {
     }
 
     /**
-     * Prints the application's ASCII art logo to the console.
-     */
-    public void printLogo() {
-        System.out.println(LOGO);
-    }
-
-    /**
      * Prints an error message indicating the save file is corrupted.
      */
     public static void printLoadError() {
@@ -60,7 +53,7 @@ public class Ui {
      *
      * @return Goodbye message.
      */
-    public String exit() {
+    public static String exit() {
         return "Bye. Hope to see you again soon!";
     }
 
